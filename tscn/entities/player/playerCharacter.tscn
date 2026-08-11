@@ -6,12 +6,16 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_86ap7"]
 size = Vector2(127, 129)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8imwq"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hor4t"]
+size = Vector2(128, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dorhx"]
 size = Vector2(128, 128)
 
 [node name="playerCharacter" type="Node2D" unique_id=1933972970]
 
 [node name="playerBody" type="CharacterBody2D" parent="." unique_id=372226167]
+motion_mode = 1
 script = ExtResource("2_dorhx")
 
 [node name="playerSprite" type="Sprite2D" parent="playerBody" unique_id=125675273]
@@ -23,23 +27,45 @@ shape = SubResource("RectangleShape2D_86ap7")
 
 [node name="playerCamera" type="Camera2D" parent="playerBody" unique_id=187727359]
 
-[node name="touchScreenAttack" type="TouchScreenButton" parent="playerBody" unique_id=292831689]
-position = Vector2(256, 128)
+[node name="touchControls" type="Control" parent="playerBody" unique_id=1660017084]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="touchScreenAttack" type="TouchScreenButton" parent="playerBody/touchControls" unique_id=292831689]
+position = Vector2(276, 148)
 texture_normal = ExtResource("1_oh4ol")
-shape = SubResource("RectangleShape2D_8imwq")
+shape = SubResource("RectangleShape2D_hor4t")
 action = "attack"
 
-[node name="touchScreenDodge" type="TouchScreenButton" parent="playerBody" unique_id=1928647707]
-position = Vector2(416, 64)
+[node name="touchScreenDodge" type="TouchScreenButton" parent="playerBody/touchControls" unique_id=1928647707]
+position = Vector2(436, 84)
 texture_normal = ExtResource("1_oh4ol")
-shape = SubResource("RectangleShape2D_8imwq")
+shape = SubResource("RectangleShape2D_dorhx")
 action = "dodge"
 
-[node name="VirtualJoystick" type="VirtualJoystick" parent="playerBody" unique_id=1959850357]
+[node name="VirtualJoystick" type="VirtualJoystick" parent="playerBody/touchControls" unique_id=1959850357]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 offset_left = -544.0
 offset_top = 96.0
 offset_right = -352.0
 offset_bottom = 288.0
+grow_horizontal = 2
+grow_vertical = 2
 joystick_size = 224.0
 tip_size = 135.0
 action_left = &"moveLeft"

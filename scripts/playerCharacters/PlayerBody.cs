@@ -1,11 +1,11 @@
 using Godot;
 using System;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 
 public partial class PlayerBody : CharacterBody2D
 {
 	public const float Speed = 600.0f;
-
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -36,13 +36,23 @@ public partial class PlayerBody : CharacterBody2D
 		}
 		if (Input.IsActionJustPressed("dodge"))
 		{
-			GD.Print("desvio");
+			GD.Print("desliga");
 			collision.SetDeferred("DisableMode", true);
-			Thread.Sleep(1000);
-			collision.SetDeferred("DisabledMode", false);
+			//DodgeCooldown();
+			GD.Print("liga");
+			collision.SetDeferred("DisableMode", false);
 		}
 
 		Velocity = velocity;
 		MoveAndSlide();
+	}/*
+	public async void DodgeCooldown()
+	{
+		SceneTreeTimer timer = GetTree().CreateTimer(2.0);
+		Connect(ToSignal(timer, SceneTreeTimer.SignalName.Timeout), DodgeSequence);
 	}
+	publicvoid DodgeSequence()
+		{
+		
+		}*/
 }
