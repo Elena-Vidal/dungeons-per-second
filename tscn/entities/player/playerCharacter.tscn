@@ -2,12 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bu4buoup41dgv" path="res://scripts/playerCharacters/player_body.gd" id="1_dorhx"]
 [ext_resource type="Texture2D" uid="uid://u0erjas0ssh" path="res://icon.svg" id="1_oh4ol"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hor4t"]
-size = Vector2(128, 128)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dorhx"]
-size = Vector2(128, 128)
+[ext_resource type="PackedScene" uid="uid://f7trewn5q8u7" path="res://tscn/misc/ingameUserInterface.tscn" id="2_dorhx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_86ap7"]
 size = Vector2(128, 128)
@@ -18,52 +13,7 @@ size = Vector2(128, 128)
 motion_mode = 1
 script = ExtResource("1_dorhx")
 
-[node name="touchControls" type="Control" parent="playerBody" unique_id=1660017084]
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -39.200253
-offset_top = -39.200253
-offset_right = 0.79974747
-offset_bottom = 0.79974747
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="touchScreenAttack" type="TouchScreenButton" parent="playerBody/touchControls" unique_id=292831689]
-position = Vector2(276, 148)
-texture_normal = ExtResource("1_oh4ol")
-shape = SubResource("RectangleShape2D_hor4t")
-action = "attack"
-
-[node name="touchScreenDodge" type="TouchScreenButton" parent="playerBody/touchControls" unique_id=1928647707]
-position = Vector2(436, 84)
-texture_normal = ExtResource("1_oh4ol")
-shape = SubResource("RectangleShape2D_dorhx")
-action = "dodge"
-
-[node name="VirtualJoystick" type="VirtualJoystick" parent="playerBody/touchControls" unique_id=1959850357]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -544.0
-offset_top = 96.0
-offset_right = -352.0
-offset_bottom = 288.0
-grow_horizontal = 2
-grow_vertical = 2
-joystick_size = 224.0
-tip_size = 135.0
-action_left = &"moveLeft"
-action_right = &"moveRight"
-action_up = &"moveUp"
-action_down = &"moveDown"
+[node name="ingameUserInterface" parent="playerBody" unique_id=1312047124 instance=ExtResource("2_dorhx")]
 
 [node name="playerSprite" type="Sprite2D" parent="playerBody" unique_id=125675273]
 scale = Vector2(0.5, 0.5)
