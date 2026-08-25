@@ -10,7 +10,7 @@ size = Vector2(128, 128)
 size = Vector2(128, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_86ap7"]
-size = Vector2(127, 129)
+size = Vector2(128, 128)
 
 [node name="playerCharacter" type="Node2D" unique_id=1933972970]
 

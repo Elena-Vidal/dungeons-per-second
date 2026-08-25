@@ -73,6 +73,11 @@ texture = ExtResource("2_tvqp1")
 [sub_resource type="TileSet" id="TileSet_86ap7"]
 sources/0 = SubResource("TileSetAtlasSource_pn3c7")
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_86ap7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oh4ol"]
+size = Vector2(52, 146)
+
 [node name="debugRoom" type="Node2D" unique_id=1145820239]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=685300995]
@@ -81,3 +86,27 @@ tile_set = SubResource("TileSet_86ap7")
 
 [node name="playerCharacter" parent="." unique_id=1933972970 instance=ExtResource("1_hiefj")]
 position = Vector2(644, 347)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=928767849]
+position = Vector2(794, 224)
+physics_material_override = SubResource("PhysicsMaterial_86ap7")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=965670597]
+scale = Vector2(0.40625, 1.140625)
+texture = ExtResource("2_tvqp1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=2104870530]
+shape = SubResource("RectangleShape2D_oh4ol")
+debug_color = Color(0.45725614, 0.5016541, 0.8410469, 0.41960785)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=1227586769]
+position = Vector2(795, 408)
+physics_material_override = SubResource("PhysicsMaterial_86ap7")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2" unique_id=1929158579]
+scale = Vector2(0.40625, 1.140625)
+texture = ExtResource("2_tvqp1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=163678756]
+shape = SubResource("RectangleShape2D_oh4ol")
+debug_color = Color(0.45725614, 0.5016541, 0.8410469, 0.41960785)
