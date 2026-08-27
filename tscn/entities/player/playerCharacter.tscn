@@ -14,6 +14,18 @@ motion_mode = 1
 script = ExtResource("1_dorhx")
 
 [node name="ingameUserInterface" parent="playerBody" unique_id=1312047124 instance=ExtResource("2_dorhx")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_horizontal = 4
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
 
 [node name="playerSprite" type="Sprite2D" parent="playerBody" unique_id=125675273]
 scale = Vector2(0.5, 0.5)

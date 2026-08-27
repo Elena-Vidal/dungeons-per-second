@@ -18,43 +18,19 @@ grow_vertical = 2
 
 [node name="touchControls" type="Control" parent="." unique_id=262838008]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -39.200253
-offset_top = -39.200253
-offset_right = 0.79974747
-offset_bottom = 0.79974747
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="touchScreenAttack" type="TouchScreenButton" parent="touchControls" unique_id=1091496439]
-position = Vector2(276, 148)
-texture_normal = ExtResource("1_nfqmf")
-shape = SubResource("RectangleShape2D_4lbuk")
-action = "attack"
-
-[node name="touchScreenDodge" type="TouchScreenButton" parent="touchControls" unique_id=64695984]
-position = Vector2(436, 84)
-texture_normal = ExtResource("1_nfqmf")
-shape = SubResource("RectangleShape2D_74dyr")
-action = "dodge"
-
 [node name="VirtualJoystick" type="VirtualJoystick" parent="touchControls" unique_id=467593165]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -544.0
-offset_top = 96.0
-offset_right = -352.0
-offset_bottom = 288.0
-grow_horizontal = 2
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_top = 360.0
+offset_right = 384.0
 grow_vertical = 2
 joystick_size = 224.0
 tip_size = 135.0
@@ -62,3 +38,22 @@ action_left = &"moveLeft"
 action_right = &"moveRight"
 action_up = &"moveUp"
 action_down = &"moveDown"
+
+[node name="Control" type="Control" parent="touchControls" unique_id=1646543036]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 692.0
+offset_top = 308.0
+
+[node name="touchScreenAttack" type="TouchScreenButton" parent="touchControls/Control" unique_id=1091496439]
+position = Vector2(148, 212)
+texture_normal = ExtResource("1_nfqmf")
+shape = SubResource("RectangleShape2D_4lbuk")
+action = "attack"
+
+[node name="touchScreenDodge" type="TouchScreenButton" parent="touchControls/Control" unique_id=64695984]
+position = Vector2(340, 84)
+texture_normal = ExtResource("1_nfqmf")
+shape = SubResource("RectangleShape2D_74dyr")
+action = "dodge"

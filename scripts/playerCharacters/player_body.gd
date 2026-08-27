@@ -38,7 +38,6 @@ func _dodge_logic(delta: float):
 		dodge_range = DODGE_RANGE
 		velocity = dodge_direction * DODGE_SPEED
 		
-		print("wowie")
 	
 	if dodge_range > 0.0:
 		dodge_range = max(0.0, dodge_range - delta)
