@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bu4buoup41dgv" path="res://scripts/playerCharacters/player_body.gd" id="1_dorhx"]
 [ext_resource type="Texture2D" uid="uid://u0erjas0ssh" path="res://icon.svg" id="1_oh4ol"]
 [ext_resource type="PackedScene" uid="uid://f7trewn5q8u7" path="res://tscn/misc/ingameUserInterface.tscn" id="2_dorhx"]
+[ext_resource type="Script" uid="uid://cmrs8mq20re8e" path="res://scripts/playerCharacters/slash_attack.gd" id="4_hor4t"]
 
 [sub_resource type="Animation" id="Animation_dorhx"]
 length = 0.001
@@ -127,6 +128,7 @@ script = ExtResource("1_dorhx")
 libraries/ = SubResource("AnimationLibrary_in7u4")
 
 [node name="ingameUserInterface" parent="playerBody" unique_id=1312047124 instance=ExtResource("2_dorhx")]
+visible = false
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -153,8 +155,13 @@ shape = SubResource("RectangleShape2D_86ap7")
 position_smoothing_speed = 10.0
 
 [node name="slashAttack" type="Area2D" parent="playerBody" unique_id=950660081]
+collision_layer = 3
+collision_mask = 3
 monitoring = false
 monitorable = false
+script = ExtResource("4_hor4t")
 
 [node name="slashAttackCollision" type="CollisionPolygon2D" parent="playerBody/slashAttack" unique_id=1649095019]
 disabled = true
+
+[connection signal="body_entered" from="playerBody/slashAttack" to="playerBody/slashAttack" method="_on_body_entered"]

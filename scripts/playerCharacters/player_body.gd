@@ -21,18 +21,17 @@ func _physics_process(delta: float) -> void:
 		
 		if movement_direction:
 			velocity = movement_direction * SPEED
+			attack_area.rotation = lerp_angle(attack_area.rotation, atan2(velocity.x, -velocity.y), delta*10.0)
 		else:
 			velocity.x = move_toward(velocity.x, 0, 45)
 			velocity.y = move_toward(velocity.y, 0, 45)
 		if Input.is_action_just_pressed("attack"):
 			animation_player.play("slash_attack_anim")
-		if animation_player.is_playing() == false and $slashAttack/slashAttackCollision.disabled ==  true:
-			print("finished")
-		else:
-			print("doing?")
-
+	
 	_dodge_logic(delta)
 	move_and_slide()
+
+
 func _dodge_logic(delta: float):
 	var movement_direction : Vector2 = Input.get_vector("moveLeft", "moveRight", "moveUp", "moveDown")
 	var collision = get_node("playerCollision")
@@ -57,3 +56,8 @@ func _dodge_logic(delta: float):
 			collision.shape.set_size(size)
 			
 			dodge_enabled = true
+
+
+func _on_slash_attack_body_entered(body: Node2D) -> void:
+	print("attack")
+	pass # Replace with function body.

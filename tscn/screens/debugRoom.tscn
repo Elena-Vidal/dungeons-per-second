@@ -100,7 +100,9 @@ shape = SubResource("RectangleShape2D_oh4ol")
 debug_color = Color(0.45725614, 0.5016541, 0.8410469, 0.41960785)
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=1227586769]
-position = Vector2(795, 408)
+position = Vector2(527, 278)
+collision_layer = 3
+collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_86ap7")
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2" unique_id=1929158579]
