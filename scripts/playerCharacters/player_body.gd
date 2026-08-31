@@ -12,6 +12,9 @@ var dodge_range : float = 0
 var dodge_cooldown : float = 0
 var dodge_direction = 0
 
+@onready var animation_player = $playerAnimations
+@onready var attack_area = $slashAttack
+
 func _physics_process(delta: float) -> void:
 	if dodge_range == 0.0:
 		var movement_direction : Vector2 = Input.get_vector("moveLeft", "moveRight", "moveUp", "moveDown")
@@ -21,6 +24,12 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.x = move_toward(velocity.x, 0, 45)
 			velocity.y = move_toward(velocity.y, 0, 45)
+		if Input.is_action_just_pressed("attack"):
+			animation_player.play("slash_attack_anim")
+		if animation_player.is_playing() == false and $slashAttack/slashAttackCollision.disabled ==  true:
+			print("finished")
+		else:
+			print("doing?")
 
 	_dodge_logic(delta)
 	move_and_slide()
