@@ -3,110 +3,13 @@
 [ext_resource type="Script" uid="uid://bu4buoup41dgv" path="res://scripts/playerCharacters/player_body.gd" id="1_dorhx"]
 [ext_resource type="Texture2D" uid="uid://u0erjas0ssh" path="res://icon.svg" id="1_oh4ol"]
 [ext_resource type="PackedScene" uid="uid://f7trewn5q8u7" path="res://tscn/misc/ingameUserInterface.tscn" id="2_dorhx"]
-[ext_resource type="Script" uid="uid://cmrs8mq20re8e" path="res://scripts/playerCharacters/slash_attack.gd" id="4_hor4t"]
 
 [sub_resource type="Animation" id="Animation_dorhx"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("slashAttack/slashAttackCollision:disabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("slashAttack/slashAttackCollision:polygon")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [PackedVector2Array()]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("slashAttack:monitorable")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("slashAttack:monitoring")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
 
 [sub_resource type="Animation" id="Animation_hor4t"]
 resource_name = "slash_attack_anim"
 length = 0.23333333
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("slashAttack/slashAttackCollision:disabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.033333335, 0.23333333),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [true, false, true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("slashAttack/slashAttackCollision:polygon")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.13333334, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [PackedVector2Array(), PackedVector2Array(0, 0, -96, -32, -64, -80), PackedVector2Array(0, 0, -96, -32, -64, -80, 0, -104), PackedVector2Array(0, 0, -96, -32, -64, -80, 0, -104, 71.964005, -88.007996), PackedVector2Array(0, 0, -96, -32, -64, -80, 0, -104, 72, -88, 136, -24)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("slashAttack:monitorable")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.0009999999, 0.033333335, 0.23333333),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("slashAttack:monitoring")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0.0009999999, 0.033333335, 0.23333333),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, false]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_in7u4"]
 _data = {
@@ -116,6 +19,12 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_86ap7"]
 size = Vector2(128, 128)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_232yk"]
+radius = 72.443085
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_232yk"]
+size = Vector2(32, 162)
 
 [node name="playerCharacter" type="Node2D" unique_id=1933972970]
 
@@ -154,14 +63,17 @@ shape = SubResource("RectangleShape2D_86ap7")
 [node name="playerCamera" type="Camera2D" parent="playerBody" unique_id=187727359]
 position_smoothing_speed = 10.0
 
-[node name="slashAttack" type="Area2D" parent="playerBody" unique_id=950660081]
-collision_layer = 3
-collision_mask = 3
-monitoring = false
-monitorable = false
-script = ExtResource("4_hor4t")
+[node name="attackArea" type="Area2D" parent="playerBody" unique_id=2121690135]
 
-[node name="slashAttackCollision" type="CollisionPolygon2D" parent="playerBody/slashAttack" unique_id=1649095019]
-disabled = true
+[node name="slashAttackCollision" type="CollisionPolygon2D" parent="playerBody/attackArea" unique_id=1746260949]
+polygon = PackedVector2Array(-56.000015, -95.99999, -128, -31.999977, -80, 1.3987645e-05, 80, -1.3987645e-05, 127.99999, -32.000023, 55.999985, -96.00001)
 
-[connection signal="body_entered" from="playerBody/slashAttack" to="playerBody/slashAttack" method="_on_body_entered"]
+[node name="impactAttackCollision" type="CollisionShape2D" parent="playerBody/attackArea" unique_id=1654041816]
+position = Vector2(-1.1190115e-05, -64)
+shape = SubResource("CircleShape2D_232yk")
+debug_color = Color(0.6782412, 0.4345997, 0.68023455, 0.41960785)
+
+[node name="pierceAttackCollision" type="CollisionShape2D" parent="playerBody/attackArea" unique_id=2140710801]
+position = Vector2(-1.1492107e-05, -71)
+shape = SubResource("RectangleShape2D_232yk")
+debug_color = Color(0.37639874, 0.6024243, 0.3518401, 0.41960785)

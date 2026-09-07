@@ -13,7 +13,7 @@ var dodge_cooldown : float = 0
 var dodge_direction = 0
 
 @onready var animation_player = $playerAnimations
-@onready var attack_area = $slashAttack
+@onready var attack_area = $attackArea
 
 func _physics_process(delta: float) -> void:
 	if dodge_range == 0.0:
@@ -56,8 +56,3 @@ func _dodge_logic(delta: float):
 			collision.shape.set_size(size)
 			
 			dodge_enabled = true
-
-
-func _on_slash_attack_body_entered(body: Node2D) -> void:
-	print("attack")
-	pass # Replace with function body.
