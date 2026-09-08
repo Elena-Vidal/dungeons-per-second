@@ -19,6 +19,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector2(0.5, 0.5)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("playerSprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_hor4t"]
 resource_name = "player_idle"
@@ -33,27 +45,63 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.33333334, 0.6666667, 1, 1.3333334),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
+"update": 1,
 "values": [Vector2(0.5, 0.5), Vector2(0.55, 0.45), Vector2(0.5, 0.5), Vector2(0.45, 0.55), Vector2(0.5, 0.5)]
+}
+
+[sub_resource type="Animation" id="Animation_in7u4"]
+resource_name = "player_walk"
+length = 0.13333334
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("playerSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.1, 0.13333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0.10471976, 0.0, -0.10471976, 0.0, 0.10471976]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_in7u4"]
 _data = {
 &"RESET": SubResource("Animation_dorhx"),
-&"player_idle": SubResource("Animation_hor4t")
+&"player_idle": SubResource("Animation_hor4t"),
+&"player_walk": SubResource("Animation_in7u4")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hor4t"]
 animation = &"player_idle"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_in7u4"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_in7u4"]
+animation = &"player_walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_uey6d"]
+animation = &"player_walk"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_dw3kb"]
+blend_mode = 1
+blend_point_0/node = SubResource("AnimationNodeAnimation_hor4t")
+blend_point_0/pos = 0.0
+blend_point_0/name = &"player_idle"
+blend_point_1/node = SubResource("AnimationNodeAnimation_in7u4")
+blend_point_1/pos = 1.0
+blend_point_1/name = &"player_walk"
+blend_point_2/node = SubResource("AnimationNodeAnimation_uey6d")
+blend_point_2/pos = -1.0
+blend_point_2/name = &"player_walk 2"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qyku1"]
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_hor4t"]
-states/Start/position = Vector2(395, 100)
-states/player_idle/node = SubResource("AnimationNodeAnimation_hor4t")
-states/player_idle/position = Vector2(552, 100)
-transitions = ["Start", "player_idle", SubResource("AnimationNodeStateMachineTransition_in7u4")]
+states/Start/position = Vector2(387, 102.60081)
+states/movement/node = SubResource("AnimationNodeBlendSpace1D_dw3kb")
+states/movement/position = Vector2(544.6667, 101.16322)
+transitions = ["Start", "movement", SubResource("AnimationNodeStateMachineTransition_qyku1")]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_86ap7"]
 size = Vector2(128, 128)
@@ -77,6 +125,7 @@ libraries/ = SubResource("AnimationLibrary_in7u4")
 [node name="playerAnimationTree" type="AnimationTree" parent="playerBody" unique_id=1816423026]
 tree_root = SubResource("AnimationNodeStateMachine_hor4t")
 anim_player = NodePath("../playerAnimations")
+parameters/movement/blend_position = -0.002171576
 
 [node name="ingameUserInterface" parent="playerBody" unique_id=1312047124 instance=ExtResource("2_dorhx")]
 visible = false
@@ -98,6 +147,7 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_oh4ol")
 
 [node name="playerCollision" type="CollisionShape2D" parent="playerBody" unique_id=1245706433]
+visible = false
 position = Vector2(-0.5, -0.5)
 scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_86ap7")

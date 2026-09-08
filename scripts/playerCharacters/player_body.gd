@@ -13,7 +13,12 @@ var dodge_cooldown : float = 0
 var dodge_direction = 0
 
 @onready var animation_player = $playerAnimations
+@onready var animation_tree = $playerAnimationTree
+@onready var state_machine = animation_tree["parameters/playback"]
 @onready var attack_area = $attackArea
+
+func _ready() -> void:
+	animation_tree.active = true
 
 func _physics_process(delta: float) -> void:
 	if dodge_range == 0.0:
@@ -21,15 +26,18 @@ func _physics_process(delta: float) -> void:
 		
 		if movement_direction:
 			velocity = movement_direction * SPEED
+			animation_player.play("player_walk")
 			attack_area.rotation = lerp_angle(attack_area.rotation, atan2(velocity.x, -velocity.y), delta*10.0)
 		else:
 			velocity.x = move_toward(velocity.x, 0, 45)
 			velocity.y = move_toward(velocity.y, 0, 45)
+			animation_player.play("player_idle")
 		if Input.is_action_just_pressed("attack"):
 			animation_player.play("slash_attack_anim")
 	
 	_dodge_logic(delta)
 	move_and_slide()
+	animation_tree.set("parameters/movement/blend_position", (velocity.x || velocity.y))
 
 
 func _dodge_logic(delta: float):
