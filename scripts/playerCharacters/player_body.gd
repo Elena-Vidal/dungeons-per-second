@@ -12,55 +12,65 @@ var dodge_range : float = 0
 var dodge_cooldown : float = 0
 var dodge_direction = 0
 
+var attack_class = 1
+
 @onready var animation_player = $playerAnimations
 @onready var animation_tree = $playerAnimationTree
 @onready var state_machine = animation_tree["parameters/playback"]
 @onready var attack_area = $attackArea
 
 func _ready() -> void:
-	animation_tree.active = true
+    animation_tree.active = true
 
 func _physics_process(delta: float) -> void:
-	if dodge_range == 0.0:
-		var movement_direction : Vector2 = Input.get_vector("moveLeft", "moveRight", "moveUp", "moveDown")
-		
-		if movement_direction:
-			velocity = movement_direction * SPEED
-			animation_player.play("player_walk")
-			attack_area.rotation = lerp_angle(attack_area.rotation, atan2(velocity.x, -velocity.y), delta*10.0)
-		else:
-			velocity.x = move_toward(velocity.x, 0, 45)
-			velocity.y = move_toward(velocity.y, 0, 45)
-			animation_player.play("player_idle")
-		if Input.is_action_just_pressed("attack"):
-			animation_player.play("slash_attack_anim")
-	
-	_dodge_logic(delta)
-	move_and_slide()
-	animation_tree.set("parameters/movement/blend_position", (velocity.x || velocity.y))
-
+    if dodge_range == 0.0:
+        var movement_direction : Vector2 = Input.get_vector("moveLeft", "moveRight", "moveUp", "moveDown")
+        
+        if movement_direction:
+            velocity = movement_direction * SPEED
+            animation_player.play("player_walk")
+            attack_area.rotation = lerp_angle(attack_area.rotation, atan2(velocity.x, -velocity.y), delta*10.0)
+        else:
+            velocity.x = move_toward(velocity.x, 0, 45)
+            velocity.y = move_toward(velocity.y, 0, 45)
+            animation_player.play("player_idle")
+    
+    _dodge_logic(delta)
+    _attack_logic(delta)
+    _animation_updater()
+    move_and_slide()
+    
 
 func _dodge_logic(delta: float):
-	var movement_direction : Vector2 = Input.get_vector("moveLeft", "moveRight", "moveUp", "moveDown")
-	var collision = get_node("playerCollision")
-	var size = COLLISION_SIZE
-	if dodge_enabled == true and Input.is_action_just_pressed("dodge"):
-		dodge_enabled = false
-		
-		collision.shape.set_size(size/2)
-		
-		dodge_direction = movement_direction
-		dodge_cooldown = DODGE_COOLDOWN
-		dodge_range = DODGE_RANGE
-		velocity = dodge_direction * DODGE_SPEED
-		
-	
-	if dodge_range > 0.0:
-		dodge_range = max(0.0, dodge_range - delta)
-	else:
-		if dodge_cooldown > 0.0:
-			dodge_cooldown -= delta
-		else:
-			collision.shape.set_size(size)
-			
-			dodge_enabled = true
+    var movement_direction : Vector2 = Input.get_vector("moveLeft", "moveRight", "moveUp", "moveDown")
+    var collision = get_node("playerCollision")
+    var size = COLLISION_SIZE
+    if dodge_enabled == true and Input.is_action_just_pressed("dodge"):
+        dodge_enabled = false
+        
+        collision.shape.set_size(size/2)
+        
+        dodge_direction = movement_direction
+        dodge_cooldown = DODGE_COOLDOWN
+        dodge_range = DODGE_RANGE
+        velocity = dodge_direction * DODGE_SPEED
+        
+    
+    if dodge_range > 0.0:
+        dodge_range = max(0.0, dodge_range - delta)
+    else:
+        if dodge_cooldown > 0.0:
+            dodge_cooldown -= delta
+        else:
+            collision.shape.set_size(size)
+            
+            dodge_enabled = true
+
+func _attack_logic(delta: float):
+    if dodge_range == 0.0:
+        if Input.is_action_just_pressed("attack"):
+            animation_player.play("attack_pierce")
+
+func _animation_updater():
+    animation_tree.set("parameters/movement/blend_position", (velocity.x || velocity.y))
+    animation_tree.set("parameters/piercing_attack/blend_position", attack_class)

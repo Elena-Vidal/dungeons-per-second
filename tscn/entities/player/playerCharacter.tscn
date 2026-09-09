@@ -31,6 +31,68 @@ tracks/1/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("playerSprite:scale:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.5, -0.083333336, 0, 0.083333336, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("playerSprite:scale:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.5, -0.083333336, 0, 0.083333336, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("playerSprite:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_uey6d"]
+resource_name = "attack_pierce"
+length = 0.16666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("playerSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(0.25, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("playerSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(0, 0), Vector2(-1.2588881e-05, -72), Vector2(-8.392586e-06, -48), Vector2(-4.196293e-06, -24.000004), Vector2(0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_hor4t"]
 resource_name = "player_idle"
@@ -69,6 +131,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_in7u4"]
 _data = {
 &"RESET": SubResource("Animation_dorhx"),
+&"attack_pierce": SubResource("Animation_uey6d"),
 &"player_idle": SubResource("Animation_hor4t"),
 &"player_walk": SubResource("Animation_in7u4")
 }
@@ -94,14 +157,44 @@ blend_point_2/node = SubResource("AnimationNodeAnimation_uey6d")
 blend_point_2/pos = -1.0
 blend_point_2/name = &"player_walk 2"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dw3kb"]
+animation = &"attack_pierce"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qyku1"]
+animation = &"attack_pierce"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vlprl"]
+animation = &"player_idle"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_ehpp1"]
+blend_mode = 1
+blend_point_0/node = SubResource("AnimationNodeAnimation_dw3kb")
+blend_point_0/pos = 1.0
+blend_point_0/name = &"attack_pierce"
+blend_point_1/node = SubResource("AnimationNodeAnimation_qyku1")
+blend_point_1/pos = -1.0
+blend_point_1/name = &"attack_pierce 2"
+blend_point_2/node = SubResource("AnimationNodeAnimation_vlprl")
+blend_point_2/pos = 0.0
+blend_point_2/name = &"player_idle"
+
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qyku1"]
 advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_16hgp"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hor4t"]
+switch_mode = 1
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_hor4t"]
 states/Start/position = Vector2(387, 102.60081)
 states/movement/node = SubResource("AnimationNodeBlendSpace1D_dw3kb")
-states/movement/position = Vector2(544.6667, 101.16322)
-transitions = ["Start", "movement", SubResource("AnimationNodeStateMachineTransition_qyku1")]
+states/movement/position = Vector2(542.6667, 102.60081)
+states/piercing_attack/node = SubResource("AnimationNodeBlendSpace1D_ehpp1")
+states/piercing_attack/position = Vector2(542.6667, 188)
+transitions = ["Start", "movement", SubResource("AnimationNodeStateMachineTransition_qyku1"), "piercing_attack", "movement", SubResource("AnimationNodeStateMachineTransition_16hgp"), "movement", "piercing_attack", SubResource("AnimationNodeStateMachineTransition_hor4t")]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_86ap7"]
 size = Vector2(128, 128)
@@ -115,6 +208,7 @@ size = Vector2(32, 162)
 [node name="playerCharacter" type="Node2D" unique_id=1933972970]
 
 [node name="playerBody" type="CharacterBody2D" parent="." unique_id=372226167]
+unique_name_in_owner = true
 rotation = 6.2831855
 motion_mode = 1
 script = ExtResource("1_dorhx")
@@ -126,6 +220,7 @@ libraries/ = SubResource("AnimationLibrary_in7u4")
 tree_root = SubResource("AnimationNodeStateMachine_hor4t")
 anim_player = NodePath("../playerAnimations")
 parameters/movement/blend_position = -0.002171576
+parameters/piercing_attack/blend_position = 0.0
 
 [node name="ingameUserInterface" parent="playerBody" unique_id=1312047124 instance=ExtResource("2_dorhx")]
 visible = false
@@ -156,7 +251,6 @@ shape = SubResource("RectangleShape2D_86ap7")
 position_smoothing_speed = 10.0
 
 [node name="attackArea" type="Area2D" parent="playerBody" unique_id=2121690135]
-visible = false
 collision_mask = 2
 script = ExtResource("4_hor4t")
 
@@ -169,7 +263,7 @@ shape = SubResource("CircleShape2D_232yk")
 debug_color = Color(0.6782412, 0.4345997, 0.68023455, 0.41960785)
 
 [node name="pierceAttackCollision" type="CollisionShape2D" parent="playerBody/attackArea" unique_id=2140710801]
-position = Vector2(-1.1492107e-05, -71)
+position = Vector2(-1.258888e-05, -72)
 shape = SubResource("RectangleShape2D_232yk")
 debug_color = Color(0.37639874, 0.6024243, 0.3518401, 0.41960785)
 
