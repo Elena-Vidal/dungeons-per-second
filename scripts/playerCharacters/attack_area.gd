@@ -9,6 +9,8 @@ extends Area2D
 		#cooldown.start()
 
 func _on_body_entered(body: Node2D) -> void:
+	print(body)
+	print(body.get_groups())
 	if body.is_in_group("enemies"):
 		body.queue_free()
 #
