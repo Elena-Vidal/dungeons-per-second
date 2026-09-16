@@ -89,6 +89,7 @@ position = Vector2(644, 347)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=928767849]
 position = Vector2(794, 224)
+collision_layer = 3
 physics_material_override = SubResource("PhysicsMaterial_86ap7")
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=965670597]
@@ -99,7 +100,7 @@ texture = ExtResource("2_tvqp1")
 shape = SubResource("RectangleShape2D_oh4ol")
 debug_color = Color(0.45725614, 0.5016541, 0.8410469, 0.41960785)
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=1227586769]
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=1227586769 groups=["enemies"]]
 position = Vector2(527, 278)
 collision_layer = 3
 physics_material_override = SubResource("PhysicsMaterial_86ap7")

@@ -12,6 +12,8 @@ var dodge_range : float = 0
 var dodge_cooldown : float = 0
 var dodge_direction = 0
 
+var attack_type : String = "piercing_attack"
+
 @onready var animation_player = $playerAnimations
 @onready var animation_tree = $playerAnimationTree
 @onready var state_machine = animation_tree["parameters/playback"]
@@ -21,6 +23,13 @@ func _ready() -> void:
 	animation_tree.active = true
 
 func _physics_process(delta: float) -> void:
+	if Input.is_key_pressed(KEY_1):
+		attack_type = "piercing_attack"
+	if Input.is_key_pressed(KEY_2):
+		attack_type = "impact_attack"
+	if Input.is_key_pressed(KEY_3):
+		attack_type = "slash_attack"
+
 	if dodge_range == 0.0:
 		var movement_direction : Vector2 = Input.get_vector("moveLeft", "moveRight", "moveUp", "moveDown")
 		
@@ -32,13 +41,18 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0, 45)
 			velocity.y = move_toward(velocity.y, 0, 45)
 			animation_player.play("player_idle")
-		if Input.is_action_just_pressed("attack"):
-			animation_player.play("slash_attack_anim")
+	
 	
 	_dodge_logic(delta)
+	_attack_logic()
 	move_and_slide()
 	animation_tree.set("parameters/movement/blend_position", (velocity.x || velocity.y))
 
+
+func _attack_logic():
+	if dodge_range == 0.0:
+		if Input.is_action_just_pressed("attack"):
+			state_machine.travel(attack_type)
 
 func _dodge_logic(delta: float):
 	var movement_direction : Vector2 = Input.get_vector("moveLeft", "moveRight", "moveUp", "moveDown")
