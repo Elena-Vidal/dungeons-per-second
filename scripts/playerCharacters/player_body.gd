@@ -5,7 +5,7 @@ const SPEED := 450.0
 const DODGE_SPEED := 1000
 const DODGE_COOLDOWN := 0.2 
 const DODGE_RANGE := 0.2
-const COLLISION_SIZE : Vector2 = Vector2(128, 128)
+const COLLISION_RADIUS : float = 65
 
 var dodge_enabled : bool = true
 var dodge_range : float = 0
@@ -57,11 +57,11 @@ func _attack_logic():
 func _dodge_logic(delta: float):
 	var movement_direction : Vector2 = Input.get_vector("moveLeft", "moveRight", "moveUp", "moveDown")
 	var collision = get_node("playerCollision")
-	var size = COLLISION_SIZE
+	var radius = COLLISION_RADIUS
 	if dodge_enabled == true and Input.is_action_just_pressed("dodge"):
 		dodge_enabled = false
 		
-		collision.shape.set_size(size/2)
+		collision.shape.set_radius(radius/2)
 		
 		dodge_direction = movement_direction
 		dodge_cooldown = DODGE_COOLDOWN
@@ -75,6 +75,6 @@ func _dodge_logic(delta: float):
 		if dodge_cooldown > 0.0:
 			dodge_cooldown -= delta
 		else:
-			collision.shape.set_size(size)
+			collision.shape.set_radius(radius)
 			
 			dodge_enabled = true

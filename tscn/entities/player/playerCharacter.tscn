@@ -368,8 +368,8 @@ states/slash_attack/position = Vector2(692, 220)
 transitions = ["Start", "movement", SubResource("AnimationNodeStateMachineTransition_qyku1"), "movement", "piercing_attack", SubResource("AnimationNodeStateMachineTransition_vlprl"), "piercing_attack", "movement", SubResource("AnimationNodeStateMachineTransition_hor4t"), "movement", "impact_attack", SubResource("AnimationNodeStateMachineTransition_cix26"), "movement", "slash_attack", SubResource("AnimationNodeStateMachineTransition_16hgp"), "slash_attack", "movement", SubResource("AnimationNodeStateMachineTransition_1dgiv"), "impact_attack", "movement", SubResource("AnimationNodeStateMachineTransition_3b07v")]
 graph_offset = Vector2(0, 50.288696)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_86ap7"]
-size = Vector2(128, 128)
+[sub_resource type="CircleShape2D" id="CircleShape2D_6c1wi"]
+radius = 65.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_232yk"]
 radius = 72.443085
@@ -415,7 +415,7 @@ texture = ExtResource("1_oh4ol")
 [node name="playerCollision" type="CollisionShape2D" parent="playerBody" unique_id=1245706433]
 position = Vector2(-0.5, -0.5)
 scale = Vector2(0.5, 0.5)
-shape = SubResource("RectangleShape2D_86ap7")
+shape = SubResource("CircleShape2D_6c1wi")
 
 [node name="playerCamera" type="Camera2D" parent="playerBody" unique_id=187727359]
 position_smoothing_speed = 10.0
