@@ -26,6 +26,10 @@ window/stretch/mode="viewport"
 
 project/assembly_name="dungeons-per-second"
 
+[global_group]
+
+enemies=""
+
 [importer_defaults]
 
 texture={
