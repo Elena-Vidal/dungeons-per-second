@@ -6,6 +6,7 @@ const DODGE_SPEED := 1000
 const DODGE_COOLDOWN := 0.2 
 const DODGE_RANGE := 0.2
 const COLLISION_RADIUS : float = 65
+const COLLISION_HEIGHT : float = 162
 
 var dodge_enabled : bool = true
 var dodge_range : float = 0
@@ -58,10 +59,12 @@ func _dodge_logic(delta: float):
 	var movement_direction : Vector2 = Input.get_vector("moveLeft", "moveRight", "moveUp", "moveDown")
 	var collision = get_node("playerCollision")
 	var radius = COLLISION_RADIUS
+	var height = COLLISION_HEIGHT
 	if dodge_enabled == true and Input.is_action_just_pressed("dodge"):
 		dodge_enabled = false
 		
 		collision.shape.set_radius(radius/2)
+		collision.shape.set_height(height/2)
 		
 		dodge_direction = movement_direction
 		dodge_cooldown = DODGE_COOLDOWN
@@ -76,5 +79,6 @@ func _dodge_logic(delta: float):
 			dodge_cooldown -= delta
 		else:
 			collision.shape.set_radius(radius)
+			collision.shape.set_height(height)
 			
 			dodge_enabled = true
