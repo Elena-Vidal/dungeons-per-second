@@ -2,11 +2,20 @@
 
 [ext_resource type="Script" uid="uid://cmx55r4hbnivy" path="res://scripts/enviroment/worldGeneration/randomWalker.gd" id="1_d5e87"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_6lmem"]
+
 [node name="procGen" type="Node" unique_id=688326595]
 
 [node name="randomWalker" type="Node2D" parent="." unique_id=1097213206]
 script = ExtResource("1_d5e87")
 _level_length = 10
+
+[node name="Label" type="Label" parent="randomWalker" unique_id=2017868455]
+offset_right = 1280.0
+offset_bottom = 720.0
+label_settings = SubResource("LabelSettings_6lmem")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="rooms" type="Node" parent="." unique_id=865603694]
 
