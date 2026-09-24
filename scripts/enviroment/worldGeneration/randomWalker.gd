@@ -68,7 +68,7 @@ func _print_layout() -> void:
 		for x in _level_dimensions.x:
 			layout += '\t' + "[" + str(level_layout[x][y]) + "]" + '\t'
 		layout += '\n'
-	$Label.text = layout
+	print(layout)
 
 func _gen_start() -> void:
 	if _start_room.x < 0 or _start_room.x >= _level_dimensions.x:
