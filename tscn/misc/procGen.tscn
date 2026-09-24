@@ -6,6 +6,7 @@
 
 [node name="randomWalker" type="Node2D" parent="." unique_id=1097213206]
 script = ExtResource("1_d5e87")
+_level_length = 10
 
 [node name="rooms" type="Node" parent="." unique_id=865603694]
 
