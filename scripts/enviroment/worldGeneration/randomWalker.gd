@@ -6,7 +6,7 @@ extends Node2D
 @export var _item_rooms : int = 3
 @export var _item_path_lenght := Vector2i(1, 4)
 
-@onready var _room_list := $"../rooms"
+@export var _room_list : PackedScene = preload("res://tscn/misc/roomPicker.tscn")
 
 var level_layout : Array
 var possible_branches : Array[Vector2i]
@@ -14,7 +14,7 @@ var possible_branches : Array[Vector2i]
 var _rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
-#	_room_list._generate_floor()
+	_room_list.instantiate()
 
 	_initialize_level()
 	_gen_start()
