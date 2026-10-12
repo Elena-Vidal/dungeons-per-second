@@ -1,14 +1,15 @@
 extends Node2D
 
-@onready var floor_list := $floors
-@onready var wall_list := $walls
+@onready var floor_list := %floors
+@onready var wall_list := %walls
 
 var _rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
-	_generate_room([1,0,0,0])
+	_generate_room([1,1,1,1],wall_list, floor_list)
+	pass
 
-func _generate_room(doors: Array[int]) -> void:
+func _generate_room(doors: Array[int], wall_list: Node2D, floor_list: Node2D) -> void:
 	var walls := wall_list.get_children(false)
 	var floors := floor_list.get_children(false)
 	var wall_types_total := walls[0].get_child(0, false).get_child_count(false)-2
@@ -19,11 +20,7 @@ func _generate_room(doors: Array[int]) -> void:
 	
 	floors[floor_type].visible = true
 	
-	for i in walls.size():
-		print(i)
-		print(walls.size())
-		print(walls[i].get_children())
-	for i in 1:#doors.size():
+	for i in doors.size():
 		var current_side : Node2D
 		if doors[i] == 1:
 			current_side = walls[i].get_child(0)

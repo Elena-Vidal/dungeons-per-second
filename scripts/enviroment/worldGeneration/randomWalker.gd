@@ -14,7 +14,6 @@ var possible_branches : Array[Vector2i]
 var _rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
-	_room_list.instantiate()
 
 	_initialize_level()
 	_gen_start()
